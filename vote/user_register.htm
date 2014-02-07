@@ -1,0 +1,224 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="en-us" /> 
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="MSSmartTagsPreventParsing" content="true" /> 
+<meta name="description" content="Description" />
+<meta name="keywords" content="Keywords" /> 
+<meta name="author" content="Enlighten Designs" />
+<style type="text/css" media="all">@import "css/master.css";</style>
+<script src="js/ajax.js"></script>
+<title>会员注册</title>
+</head>
+
+<body>
+<div id="page-container">
+<div id="main-nav">
+<h1>Online Vote System(OVS)</h1>
+</div> 
+
+<div id="header">
+<h1><img src="images/logo_enlighten.gif" 
+width="236" height="36" alt="Enlighten Designs" border="0" /></h1>
+</div> 
+
+    <form action="user_register.php" method="post" name="formUser" onsubmit="">
+      <br />
+      <table width="70%"  border="0" align="center">
+        <tr>
+          <td width="40%" align="right"><strong>会员名：</strong></td>
+          <td width="60%"><input name="username" type="text" id="username" onfocus="is_registered(this.value);" onblur="is_registered(this.value);"/>
+            <span id="username_notice" style="color:#FF0000"> *</span></td>
+        </tr>
+        <tr>
+          <td align="right"><strong>电子邮件：</strong></td>
+          <td><input name="email" type="text" id="email" onfocus="checkEmail(this.value);" onblur="checkEmail(this.value);"/>
+            <span id="email_notice" style="color:#FF0000"> *</span></td>
+        </tr>
+        <tr>
+          <td align="right"><strong>密码：</strong></td>
+          <td><input name="password" type="password" id="password" onfocus="check_password(this.value);" onblur="check_password(this.value);"  />
+            <span style="color:#FF0000" id="password_notice"> *</span></td>
+        </tr>
+
+        <tr>
+          <td align="right"><strong>重复密码：</strong></td>
+          <td><input name="confirm_password" type="password" id="conform_password" onblur="check_conform_password(this.value);" />
+            <span style="color:#FF0000" id="conform_password_notice"> *</span></td>
+        </tr>
+        <tr>
+            <td><br></td>
+        </tr>
+        <tr>
+          <td colspan="2" align="center"><input name="action" type="hidden" value="register" >
+            <input name="Submit" type="submit" value="确认注册"></td>
+        </tr>
+      </table>
+      <br />     
+    </form> 
+    <a style="text-align:center" href="index.php"><h3>返回首页</h3></a>
+
+<div id="footer">
+<div id="altnav">
+<a href="http://css.jorux.com/wp-admin/post.php#" >About</a> - 
+<a href="http://css.jorux.com/wp-admin/post.php#" >Services</a> - 
+<a href="http://css.jorux.com/wp-admin/post.php#" >Portfolio</a> - 
+<a href="http://css.jorux.com/wp-admin/post.php#" >Contact Us</a> - 
+<a href="http://css.jorux.com/wp-admin/post.php#" >Terms of Trade</a>
+</div>
+Copyright © Enlighten Designs
+Powered by <a href="http://www.enlightenhosting.com/" >Enlighten Hosting</a> and
+<a href="http://www.vadmin.co.nz/" >Vadmin 3.0 CMS</a>
+</div>
+</div>
+
+
+
+<script language="javascript">
+function chkstr(str)
+{
+  for (var i = 0; i < str.length; i++)
+  {
+    if (str.charCodeAt(i) < 127 && !str.substr(i,1).match(/^\w+$/ig))
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+function isEmail(email)
+{
+	if (!(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/.test(email)))
+	{
+		return false;
+	}
+  return true;
+}
+
+function is_registered( username )
+{
+    if ( username == '' )
+    {
+        document.getElementById('username_notice').innerHTML = "* 用户名不能为空";
+	return false;
+    }
+
+    else if ( !chkstr( username ) )
+    {
+        document.getElementById('username_notice').innerHTML = "* 用户名含有非法字符";
+	return false;
+    }
+    else if ( username.length < 3 )
+    {
+        document.getElementById('username_notice').innerHTML = "- 用户名长度过短。"
+	return false;
+    }
+    else if ( username.length > 14 )
+    {
+        document.getElementById('username_notice').innerHTML = "* 用户名长度过长";
+	return false;
+    }
+	else
+	{
+	  
+	  sendajax('user_register.php',username_notice,'username=' + username + '&action=check_user');
+	  
+	}
+}
+
+function checkEmail(email)
+{
+  if (email == '')
+  {
+    document.getElementById('email_notice').innerHTML = "* 邮件地址不能为空";
+	return false;
+  }
+  else if (!isEmail(email))
+  {
+    document.getElementById('email_notice').innerHTML = "* 邮件地址不合法";
+	return false;
+  }
+  else
+  {
+    sendajax('user_register.php',email_notice,'email=' + email + '&action=check_email');
+	
+  }
+}
+
+
+function check_password( password )
+{
+    if ( password.length < 6 )
+    {
+        document.getElementById('password_notice').innerHTML = "- 登录密码长度过短。";
+	return false;
+    }
+    else
+    {
+        document.getElementById('password_notice').innerHTML = "* 可以注册";
+	return true;
+    }
+}
+
+function check_conform_password( conform_password )
+{
+    password = document.getElementById('password').value;
+    
+    if ( conform_password.length < 6 )
+    {
+        document.getElementById('conform_password_notice').innerHTML = "- 登录密码长度过短。";
+        return false;
+    }
+    if ( conform_password != password )
+    {
+        document.getElementById('conform_password_notice').innerHTML = "- 两次输入密码不一致";
+	return false;
+    }
+    else
+    {
+        document.getElementById('conform_password_notice').innerHTML = "* 可以注册";
+	return true;
+    }
+}
+
+function CheckData(){
+	 if(document.formUser.username.value=="")
+                {
+                    alert("Name can not be NULL!");
+                    document.formUser.username.focus();
+                    return false;
+                }
+	 else if(document.formUser.email.value=="")
+                {
+                    alert("E-mail can not be NULL!");
+                    document.formUser.email.focus();
+                    return false;
+                }
+	 else if(document.formUser.password.value=="")
+                {
+                    alert("Password can not be NULL!");
+                    document.formUser.password.focus();
+                    return false;
+                }	
+	else if(!checkEmail())
+		{
+			alert("Email is not suit");
+			document.formUser.email.focus();
+			return false;
+		}
+	else if(!check_password())
+		{
+			alert("PW is not suit");
+			document.formUser.password.focus();
+			return false;
+		}		
+		return true;
+
+}
+</script> 
+  
+</body>
+</html>

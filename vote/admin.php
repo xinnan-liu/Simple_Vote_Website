@@ -1,0 +1,315 @@
+<html>
+
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+<meta http-equiv="Content-Language" content="en-us" /> 
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="MSSmartTagsPreventParsing" content="true" /> 
+<meta name="description" content="Description" />
+<meta name="keywords" content="Keywords" /> 
+<meta name="author" content="Enlighten Designs" />
+<style type="text/css" media="all">@import "css/master.css";</style>
+        <title>Admin</title>
+    </head>
+    <?php
+    include("conn.php");
+    ?>
+    <body>
+<div id="page-container">
+<div id="main-nav">
+<h1>Online Vote System(OVS)</h1><br>
+</div> 
+
+<div id="header">
+<h1><img src="images/logo_enlighten.gif" 
+width="236" height="36" alt="Enlighten Designs" border="0" /></h1>
+</div> 
+
+            <div id="sidebar-a">
+<div class="padding">
+
+        <?php
+        $sql = "Select * from voteinc";
+        $result = mysql_query($sql, $link);
+        $num = mysql_num_rows($result);
+        session_start();
+        if (@$_SESSION['name'] == "admin") {
+            
+            echo "<h2>Welcome: " . $_SESSION['name'] . "&nbsp;&nbsp;&nbsp;&nbsp;</h2>";?>
+
+            <form action='index.php'>
+            <input type='submit' value='返回首页'>
+            </form>
+                 <form action="addvote.php" method="post" name="addvote">
+                    <input type="submit" value="新增投票">
+                </form>
+
+                <form action="logout.php" method="post" name="logout">
+                    <input type="submit" value="退出管理">
+                </form>
+</div>
+</div> 
+      
+            <?php
+            if ($num > 0) {
+                ?>
+
+<div id=cntR>
+  <div id=NewsTop>
+    <div id=NewsTop_tit>
+      <P class=topTit>投票项目</P>
+      <P class=topC0>所有</P>
+      <P class=topC0>科技</P>
+      <P class=topC0>体育</P>
+      <P class=topC0>娱乐</P>
+    </div>
+      
+        <div id=NewsTop_cnt><SPAN title="Don't delete me"></SPAN>
+ 
+ <span>
+<?php
+        $pagesize = 10;
+        $sql = "Select count(*) from voteinc";
+        $result = mysql_query($sql, $link);
+        $row = mysql_fetch_array($result);
+        //$num = mysql_num_rows($result);
+        $numrows = $row[0];
+        //if ($num > 0) {
+        $pages = intval($numrows / $pagesize);
+        if ($numrows % $pagesize)
+            $pages++;
+        if (isset($_GET['page'])) {
+            $page = intval($_GET['page']);
+        } else {
+            $page = 1;
+        }
+        $offset = $pagesize * ($page - 1);
+        $rs = mysql_query("select * from voteinc order by id limit $offset,$pagesize", $link);
+        if ($row = mysql_fetch_array($rs)) {
+            $i = 0;
+            ?>
+          
+            
+    <?php
+    do {
+        $i++;
+        echo  $row['title'] . " <a href=voteadmin.php?id=" . $row['id'] . ">" . "[编辑]</a><br>";
+     } while ($row = mysql_fetch_array($rs));
+    ?>
+    
+<?php    
+}
+
+echo"<div align='right'>共 " . $pages . " 页(" . $page . "/" . $pages . ")";
+$first = 1;
+for ($i = 1; $i < $page; $i++)
+    echo"<a href=index.php?page=" . $i . ">" . $i . "</a>";
+echo "[" . $page . "]";
+for ($i = $page + 1; $i <= $pages; $i++)
+    echo"<a href=index.php?page=" . $i . ">[" . $i . "]</a>";
+echo"</div>";
+
+?>
+  
+   </span>
+ <SPAN>
+   <?php //科技标签下投票分页显示
+        $pagesize = 10;
+        $sql = "Select count(*) from voteinc where label='科技'";
+        $result = mysql_query($sql, $link);
+        $row = mysql_fetch_array($result);
+        //$num = mysql_num_rows($result);
+        $numrows = $row[0];
+        //if ($num > 0) {
+        $pages = intval($numrows / $pagesize);
+        if ($numrows % $pagesize)
+            $pages++;
+        if (isset($_GET['page'])) {
+            $page = intval($_GET['page']);
+        } else {
+            $page = 1;
+        }
+        $offset = $pagesize * ($page - 1);
+        $rs = mysql_query("select * from voteinc where label='科技' order by id limit $offset,$pagesize", $link);
+        if ($row = mysql_fetch_array($rs)) {
+            $i = 0
+            ?>
+           
+    <?php
+     do {
+        $i++;
+        echo  $row['title'] . " <a href=voteadmin.php?id=" . $row['id'] . ">" . "[编辑]</a><br>";
+     } while ($row = mysql_fetch_array($rs));
+    
+}
+
+echo"<div align='right'>共 " . $pages . " 页(" . $page . "/" . $pages . ")";
+$first = 1;
+for ($i = 1; $i < $page; $i++)
+    echo"<a href=index.php?page=" . $i . ">" . $i . "</a>";
+echo "[" . $page . "]";
+for ($i = $page + 1; $i <= $pages; $i++)
+    echo"<a href=index.php?page=" . $i . ">[" . $i . "]</a>";
+echo"</div>";
+
+?> 
+</SPAN>
+   <SPAN>
+         <?php //体育标签下投票分页显示
+        $pagesize = 10;
+        $sql = "Select count(*) from voteinc where label='体育'";
+        $result = mysql_query($sql, $link);
+        $row = mysql_fetch_array($result);
+        //$num = mysql_num_rows($result);
+        $numrows = $row[0];
+        //if ($num > 0) {
+        $pages = intval($numrows / $pagesize);
+        if ($numrows % $pagesize)
+            $pages++;
+        if (isset($_GET['page'])) {
+            $page = intval($_GET['page']);
+        } else {
+            $page = 1;
+        }
+        $offset = $pagesize * ($page - 1);
+        $rs = mysql_query("select * from voteinc where label='体育' order by id limit $offset,$pagesize", $link);
+        if ($row = mysql_fetch_array($rs)) {
+            $i = 0
+            ?>
+           
+    <?php
+     do {
+        $i++;
+        echo  $row['title'] . " <a href=voteadmin.php?id=" . $row['id'] . ">" . "[编辑]</a><br>";
+     } while ($row = mysql_fetch_array($rs));
+    
+}
+
+echo"<div align='right'>共 " . $pages . " 页(" . $page . "/" . $pages . ")";
+$first = 1;
+for ($i = 1; $i < $page; $i++)
+    echo"<a href=index.php?page=" . $i . ">" . $i . "</a>";
+echo "[" . $page . "]";
+for ($i = $page + 1; $i <= $pages; $i++)
+    echo"<a href=index.php?page=" . $i . ">[" . $i . "]</a>";
+echo"</div>";
+
+?>
+        </SPAN>
+  <SPAN>
+       <?php //娱乐标签下投票分页显示
+        $pagesize = 10;
+        $sql = "Select count(*) from voteinc where label='娱乐'";
+        $result = mysql_query($sql, $link);
+        $row = mysql_fetch_array($result);
+        //$num = mysql_num_rows($result);
+        $numrows = $row[0];
+        //if ($num > 0) {
+        $pages = intval($numrows / $pagesize);
+        if ($numrows % $pagesize)
+            $pages++;
+        if (isset($_GET['page'])) {
+            $page = intval($_GET['page']);
+        } else {
+            $page = 1;
+        }
+        $offset = $pagesize * ($page - 1);
+        $rs = mysql_query("select * from voteinc where label='娱乐' order by id limit $offset,$pagesize", $link);
+        if ($row = mysql_fetch_array($rs)) {
+            $i = 0
+            ?>
+           
+    <?php
+     do {
+        $i++;
+        echo  $row['title'] . " <a href=voteadmin.php?id=" . $row['id'] . ">" . "[编辑]</a><br>";
+     } while ($row = mysql_fetch_array($rs));
+    
+}
+
+echo"<div align='right'>共 " . $pages . " 页(" . $page . "/" . $pages . ")";
+$first = 1;
+for ($i = 1; $i < $page; $i++)
+    echo"<a href=index.php?page=" . $i . ">" . $i . "</a>";
+echo "[" . $page . "]";
+for ($i = $page + 1; $i <= $pages; $i++)
+    echo"<a href=index.php?page=" . $i . ">[" . $i . "]</a>";
+echo"</div>";
+
+?>
+        </SPAN>
+        </div>
+  </div>
+</div>
+
+  
+  
+  
+  
+  
+  
+          <?php
+            } else {
+                echo" database has no data";
+                ?>
+                <form action="addvote.php" method="post" name="addvote">
+                    <input type="submit" value="add">
+                </form>
+
+                <form action="logout.php" method="post" name="logout">
+                    <input type="submit" value="logout">
+                </form>
+                <?php
+            }
+        } else {
+            //echo"<div id='sidebar-a'><div class='padding'>";
+            echo "</div></div>";
+            echo "<br>";
+            echo "<br>";
+            echo "<h1 style=" . "color:red;>Sorry, you don't have the permission!</h1><br>";
+            echo "Press the below button return to the index page!";
+            echo "<br>";
+            echo "<br>";
+            echo "<form action='index.php'>";
+            echo "<input type='submit' value='return'>";
+            echo "</form>";
+            
+        }
+        ?>
+        
+<div id="footer">
+<div id="altnav">
+<a href="http://css.jorux.com/wp-admin/post.php#" >About</a> - 
+<a href="http://css.jorux.com/wp-admin/post.php#" >Services</a> - 
+<a href="http://css.jorux.com/wp-admin/post.php#" >Portfolio</a> - 
+<a href="http://css.jorux.com/wp-admin/post.php#" >Contact Us</a> - 
+<a href="http://css.jorux.com/wp-admin/post.php#" >Terms of Trade</a>
+</div>
+Copyright © Enlighten Designs
+Powered by <a href="http://www.enlightenhosting.com/" >Enlighten Hosting</a> and
+<a href="http://www.vadmin.co.nz/" >Vadmin 3.0 CMS</a>
+</div>
+</div>
+<SCRIPT>
+    var Tags=document.getElementById('NewsTop_tit').getElementsByTagName('p'); 
+    var TagsCnt=document.getElementById('NewsTop_cnt').getElementsByTagName('span'); 
+    var len=Tags.length; 
+    var flag=1;//修改默认值
+    for(i=1;i<len;i++){
+     Tags[i].value = i;
+     Tags[i].onmouseover=function(){changeNav(this.value)}; 
+     TagsCnt[i].className='undis';     
+    }
+    Tags[flag].className='topC1';
+    TagsCnt[flag].className='dis';
+    function changeNav(v){ 
+     Tags[flag].className='topC0';
+     TagsCnt[flag].className='undis';
+     flag=v; 
+     Tags[v].className='topC1';
+     TagsCnt[v].className='dis';
+    }
+   </SCRIPT>
+    </body>
+
+</html>

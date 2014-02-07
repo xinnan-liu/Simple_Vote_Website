@@ -1,0 +1,124 @@
+body {
+font-family: Arial, Helvetica, Verdana, Sans-serif;
+font-size: 12px;
+color: #666666;
+background: #ffffff;
+}
+#page-container {
+width: 760px;
+margin: auto;
+}
+html,body {
+margin: 0;
+padding: 0;
+}
+#main-nav {
+height: 50px;
+
+}
+#header {
+height: 150px;
+background: #db6d16
+url(../images/about.jpg);
+}
+#sidebar-a {
+float: left;
+width: 280px;
+}
+#sidebar-a .padding {
+padding: 15px;
+}
+#content {
+margin-left: 280px;
+margin-top:15px;
+
+}
+#content .padding {
+padding: 25px;
+}
+#footer {
+clear: both;
+height: 66px;
+font-family: Tahoma, Arial, Helvetica, Sans-serif;
+font-size: 10px;
+color: #c9c9c9;
+border-top: 1px solid #efefef;
+padding: 13px 25px;
+line-height: 18px;
+}
+#footer a {
+color: #c9c9c9;
+text-decoration: none;
+}
+#footer a:hover {
+color: #db6d16;
+}
+#footer #altnav {
+width: 350px;
+float:right;
+text-align: right;
+}
+.hidden {
+display: none;
+}
+h1 {
+margin: 0;
+padding: 0;
+}
+#content h2 {
+margin: 0;
+padding: 0;
+padding-bottom: 15px;
+}
+#content p {
+margin: 0;
+padding: 0;
+padding-bottom: 15px;
+}
+#header h1 {
+margin: 0;
+padding: 0;
+float: right;
+margin-top: 57px;
+padding-right: 31px;
+}
+.dis {
+ DISPLAY: block
+}
+.undis {
+ DISPLAY: none
+}
+#cntR {
+padding:15px;
+margin-left: 280px;
+padding-top:15px;
+
+}
+#NewsTop {
+ MARGIN-top:15px
+}
+#NewsTop P {
+ FLOAT: left; LINE-HEIGHT: 21px
+}
+#NewsTop P.topTit {
+ FONT-WEIGHT: bold; WIDTH: 117px;margin-top:0px;
+}
+#NewsTop P.topC0 {
+ BACKGROUND: #dcdcdc; BORDER-LEFT: #f2f2f2 1px solid;margin-top:0px; WIDTH: 40px; CURSOR: pointer;font-size:12px;TEXT-ALIGN: center
+}
+#NewsTop P.topC1 {
+ BACKGROUND: #c2130e; BORDER-LEFT: #f2f2f2 1px solid;margin-top:0px; WIDTH: 40px; COLOR: #fff;font-size:12px;TEXT-ALIGN: center
+}
+#NewsTop #NewsTop_tit {
+ BORDER-BOTTOM: #c2130e 3px solid; HEIGHT: 21px;font-size:16px
+}
+#NewsTop #NewsTop_cnt{
+ PADDING-LEFT: 0px;  LINE-HEIGHT: 25px; PADDING-TOP: 15px; HEIGHT: 260px;TEXT-ALIGN: left
+}
+#NewsTop #NewsTop_cnt A {
+ COLOR: #666; TEXT-DECORATION: none
+}
+#NewsTop #NewsTop_cnt A:hover {
+ COLOR: #c2130e; TEXT-DECORATION: underline
+}
+textarea{resize:none}
